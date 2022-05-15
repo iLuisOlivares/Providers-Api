@@ -1,19 +1,16 @@
 package com.aux.provider.models;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-public class UsuarioModel {
+public class ServicioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    @Column(unique = true, nullable = false)
     private String email;
     private String clave;
-
-    public UsuarioModel() {
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -38,4 +35,6 @@ public class UsuarioModel {
     public String getEmail() {
         return email;
     }
+
+
 }

@@ -49,6 +49,19 @@ public class UsuarioService {
     public ArrayList<UsuarioModel> obtenerPorEmail(String email){
         return usuarioRepository.findByEmail(email);
     }
+    public String validarUsuario(String email, String clave){
+        try{
+            if(usuarioRepository.findFirst1ByEmailAndClave(email,clave) != null){
+                return "Usuario Loggeado";
+            }else if(usuarioRepository.findFirst1ByEmail(email) != null){
+                return "Contraseña incorrecta";
+            }else{
+                return "Usuario no registrado";
+            }
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
 
     public boolean eliminarUsuario(Long id){
         try{

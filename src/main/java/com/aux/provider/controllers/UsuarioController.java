@@ -21,7 +21,7 @@ public class UsuarioController {
 
     @PostMapping()
     public String guardarUsuario(@RequestBody UsuarioModel usuario){
-        boolean msg = usuarioService.guardarUsuario(usuario);
+        boolean msg = this.usuarioService.guardarUsuario(usuario);
         if(msg){
             return "Se guardo el usuario con correctamente";
         }else {
@@ -35,8 +35,14 @@ public class UsuarioController {
     }
 
     @GetMapping( path = "/query")
-    public ArrayList<UsuarioModel> obtenerUsuarioPorEmail(@RequestParam("email") String email,@RequestParam("clave") String clave){
+    public ArrayList<UsuarioModel> obtenerUsuarioPorEmail(@RequestParam("email") String email){
         return this.usuarioService.obtenerPorEmail(email);
+    }
+
+ @GetMapping( path = "/validar")
+    public String validarUsuario(@RequestParam("email") String email, @RequestParam("clave") String clave){
+     return this.usuarioService.validarUsuario(email,clave);
+
     }
 
     @PutMapping("/{id}")
