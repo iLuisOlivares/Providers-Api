@@ -8,9 +8,13 @@ public class UsuarioModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
+    private String tipo_id;
     @Column(unique = true, nullable = false)
     private String email;
     private String clave;
+
+    private boolean activo;
+
 
     public UsuarioModel() {
     }
@@ -37,5 +41,21 @@ public class UsuarioModel {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getTipo_id() {
+        return tipo_id;
+    }
+
+    public void setTipo_id(String tipo_id) {
+        this.tipo_id = tipo_id;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }
