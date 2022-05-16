@@ -8,16 +8,22 @@ public class UsuarioModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    private String tipo_id;
     @Column(unique = true, nullable = false)
     private String email;
     private String clave;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY)
+    private ProveedorModel proveedorModel;
+
     private boolean activo;
 
-
-    public UsuarioModel() {
+    public UsuarioModel(Long id, String email, String clave, boolean activo) {
+        this.id = id;
+        this.email = email;
+        this.clave = clave;
+        this.activo = activo;
     }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -43,19 +49,18 @@ public class UsuarioModel {
         return email;
     }
 
-    public String getTipo_id() {
-        return tipo_id;
-    }
-
-    public void setTipo_id(String tipo_id) {
-        this.tipo_id = tipo_id;
-    }
-
     public boolean isActivo() {
         return activo;
     }
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+    public ProveedorModel getProveedorModel() {
+        return proveedorModel;
+    }
+
+    public void setProveedorModel(ProveedorModel proveedorModel) {
+        this.proveedorModel = proveedorModel;
     }
 }

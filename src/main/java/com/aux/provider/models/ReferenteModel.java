@@ -1,10 +1,9 @@
 package com.aux.provider.models;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "referente")
 public class ReferenteModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +12,10 @@ public class ReferenteModel {
     private String nombre;
     private String tipo_referente;
     private long celular;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "referente", fetch = FetchType.LAZY)
+    private ProveedorModel proveedorModel;
+
 
     public Long getId() {
         return id;
@@ -44,5 +47,13 @@ public class ReferenteModel {
 
     public void setCelular(long celular) {
         this.celular = celular;
+    }
+
+    public ProveedorModel getProveedorModel() {
+        return proveedorModel;
+    }
+
+    public void setProveedorModel(ProveedorModel proveedorModel) {
+        this.proveedorModel = proveedorModel;
     }
 }

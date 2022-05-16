@@ -1,12 +1,16 @@
 package com.aux.provider.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "perfil")
 public class PerfilModel {
 
+    @Id
+    @GeneratedValue( strategy= GenerationType.AUTO )
+    @Column(unique = true, nullable = false)
+    private long id;
     private String nombre;
     private String apellidos;
     private String direccion;
@@ -14,8 +18,12 @@ public class PerfilModel {
     private String foto;
     private String descripcion;
     private String pagina_web;
-    private ReferenteModel referente_personal;
-    private ReferenteModel referente_familiar;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "perfil", fetch = FetchType.LAZY)
+    private ProveedorModel proveedorModel;
+
+
+
 
 
     public String getNombre() {
@@ -74,20 +82,4 @@ public class PerfilModel {
         this.pagina_web = pagina_web;
     }
 
-
-    public ReferenteModel getReferente_personal() {
-        return referente_personal;
-    }
-
-    public void setReferente_personal(ReferenteModel referente_personal) {
-        this.referente_personal = referente_personal;
-    }
-
-    public ReferenteModel getReferente_familiar() {
-        return referente_familiar;
-    }
-
-    public void setReferente_familiar(ReferenteModel referente_familiar) {
-        this.referente_familiar = referente_familiar;
-    }
 }
