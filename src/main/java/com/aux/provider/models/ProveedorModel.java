@@ -1,10 +1,17 @@
 package com.aux.provider.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "proveedor")
 public class ProveedorModel {
     @Id
@@ -25,43 +32,4 @@ public class ProveedorModel {
     private List<ServicioModel> servicios;
 
 
-    public PerfilModel getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(PerfilModel perfil) {
-        this.perfil = perfil;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTipo_id() {
-        return tipo_id;
-    }
-
-    public void setTipo_id(String tipo_id) {
-        this.tipo_id = tipo_id;
-    }
-
-    public UsuarioModel getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(UsuarioModel usuario) {
-        this.usuario = usuario;
-    }
-
-    public List<ServicioModel> getServicios() {
-        return servicios;
-    }
-
-    public void setServicios(List<ServicioModel> servicios) {
-        this.servicios = servicios;
-    }
 }

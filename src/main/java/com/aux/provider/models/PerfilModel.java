@@ -1,9 +1,16 @@
 package com.aux.provider.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import static javax.persistence.FetchType.EAGER;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "perfil")
 public class PerfilModel {
 

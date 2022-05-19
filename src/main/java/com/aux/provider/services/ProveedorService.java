@@ -5,21 +5,26 @@ import com.aux.provider.models.ProveedorModel;
 import com.aux.provider.models.UsuarioModel;
 import com.aux.provider.repositories.PerfilRepository;
 import com.aux.provider.repositories.ProveedorRepository;
-import com.aux.provider.repositories.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
-@Service
+@Service @Transactional @Slf4j @RequiredArgsConstructor
 public class ProveedorService implements ProveedorIntService {
+    private final ProveedorRepository proveedorRepository;
+    private final PerfilRepository perfilRepository;
+    private final UsuarioModel usuarioModel;
+
+    public ProveedorService() {
+    }
 
 
     @Override
     public ProveedorModel saveProveedor(ProveedorModel proveedorModel) {
-        return null;
+        return
     }
 
     @Override
