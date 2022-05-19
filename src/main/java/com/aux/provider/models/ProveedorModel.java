@@ -1,10 +1,9 @@
 package com.aux.provider.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
-import static javax.persistence.FetchType.EAGER;
 @Entity
 @Table(name = "proveedor")
 public class ProveedorModel {
@@ -18,9 +17,13 @@ public class ProveedorModel {
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "perfil_id", nullable = false, unique = true)
     private PerfilModel perfil;
-    @OneToOne(fetch=FetchType.LAZY)
+    /*@OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "referente_id", nullable = false, unique = true)
-    private ReferenteModel referente;
+    private ReferenteModel referente;*/
+
+    @OneToMany(mappedBy = "proveedor")
+    private List<ServicioModel> servicios;
+
 
     public PerfilModel getPerfil() {
         return perfil;
@@ -54,21 +57,11 @@ public class ProveedorModel {
         this.usuario = usuario;
     }
 
-    public ReferenteModel getReferente() {
-        return referente;
+    public List<ServicioModel> getServicios() {
+        return servicios;
     }
 
-    public void setReferente(ReferenteModel referente) {
-        this.referente = referente;
+    public void setServicios(List<ServicioModel> servicios) {
+        this.servicios = servicios;
     }
-
-    //public Collection<ServicioModel> getServicios() {
-    //    return servicios;
-    //}
-
-    //public void setServicios(Collection<ServicioModel> servicios) {
-    //    this.servicios = servicios;
-    //}
-
-
 }

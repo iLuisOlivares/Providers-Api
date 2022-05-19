@@ -1,6 +1,10 @@
 package com.aux.provider.controllers;
 
+import com.aux.provider.models.PerfilModel;
+import com.aux.provider.models.ProveedorModel;
 import com.aux.provider.models.UsuarioModel;
+import com.aux.provider.services.PerfilService;
+import com.aux.provider.services.ProveedorService;
 import com.aux.provider.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +17,8 @@ import java.util.Optional;
 public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
+    ProveedorService proveedorService;
+    PerfilService perfilService;
 
     @GetMapping()
     public ArrayList<UsuarioModel> obtenerUsuarios(){
@@ -20,9 +26,10 @@ public class UsuarioController {
     }
 
     @PostMapping()
-    public String guardarUsuario(@RequestBody UsuarioModel usuario){
+    public String RegistrarUsuario(@RequestBody UsuarioModel usuario){
+
         boolean msg = this.usuarioService.guardarUsuario(usuario);
-        if(msg){
+        if(msg ){
             return "Se guardo el usuario con correctamente";
         }else {
             return "Error: No se pudo guardar el usuario";

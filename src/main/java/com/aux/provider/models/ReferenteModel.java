@@ -10,11 +10,11 @@ public class ReferenteModel {
     @Column(unique = true, nullable = false)
     private Long id;
     private String nombre;
-    private String tipo_referente;
     private long celular;
+    private long email;
+   /* @OneToOne(cascade = CascadeType.ALL, mappedBy = "referente", fetch = FetchType.LAZY)
+    private ProveedorModel proveedorModel; */
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "referente", fetch = FetchType.LAZY)
-    private ProveedorModel proveedorModel;
 
 
     public Long getId() {
@@ -33,14 +33,6 @@ public class ReferenteModel {
         this.nombre = nombre;
     }
 
-    public String getTipo_referente() {
-        return tipo_referente;
-    }
-
-    public void setTipo_referente(String tipo_referente) {
-        this.tipo_referente = tipo_referente;
-    }
-
     public long getCelular() {
         return celular;
     }
@@ -49,11 +41,12 @@ public class ReferenteModel {
         this.celular = celular;
     }
 
-    public ProveedorModel getProveedorModel() {
-        return proveedorModel;
+    public long getEmail() {
+        return email;
     }
 
-    public void setProveedorModel(ProveedorModel proveedorModel) {
-        this.proveedorModel = proveedorModel;
+    public void setEmail(long email) {
+        this.email = email;
     }
+
 }

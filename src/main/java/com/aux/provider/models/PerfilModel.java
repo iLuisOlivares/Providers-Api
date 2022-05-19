@@ -20,11 +20,23 @@ public class PerfilModel {
     private String pagina_web;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "perfil", fetch = FetchType.LAZY)
-    private ProveedorModel proveedorModel;
+    private ProveedorModel proveedor;
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    public ProveedorModel getProveedor() {
+        return proveedor;
+    }
 
+    public void setProveedor(ProveedorModel proveedor) {
+        this.proveedor = proveedor;
+    }
 
     public String getNombre() {
         return nombre;
@@ -81,5 +93,6 @@ public class PerfilModel {
     public void setPagina_web(String pagina_web) {
         this.pagina_web = pagina_web;
     }
+
 
 }

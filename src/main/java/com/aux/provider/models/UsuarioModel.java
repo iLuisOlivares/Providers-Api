@@ -13,16 +13,9 @@ public class UsuarioModel {
     private String clave;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY)
-    private ProveedorModel proveedorModel;
+    private ProveedorModel proveedor;
 
     private boolean activo;
-
-    public UsuarioModel(Long id, String email, String clave, boolean activo) {
-        this.id = id;
-        this.email = email;
-        this.clave = clave;
-        this.activo = activo;
-    }
 
 
     public void setId(Long id) {
@@ -56,11 +49,11 @@ public class UsuarioModel {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-    public ProveedorModel getProveedorModel() {
-        return proveedorModel;
+    public ProveedorModel getProveedor() {
+        return proveedor;
     }
 
-    public void setProveedorModel(ProveedorModel proveedorModel) {
-        this.proveedorModel = proveedorModel;
+    public void setProveedor(ProveedorModel proveedorModel) {
+        this.proveedor = proveedorModel;
     }
 }

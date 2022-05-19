@@ -13,5 +13,4 @@ public interface UsuarioRepository extends CrudRepository<UsuarioModel,Long> {
     public abstract ArrayList<UsuarioModel> findByEmail(String email);
     public abstract UsuarioModel findFirst1ByEmail(String email);
     public abstract UsuarioModel findFirst1ByEmailAndClave(String email, String clave);
-    public abstract ArrayList<UsuarioModel> findByClave(String clave);
 }
