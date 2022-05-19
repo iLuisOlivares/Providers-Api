@@ -1,7 +1,14 @@
 package com.aux.provider.models;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "usuario")
 public class UsuarioModel {
     @Id
@@ -18,42 +25,4 @@ public class UsuarioModel {
     private boolean activo;
 
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-    public ProveedorModel getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(ProveedorModel proveedorModel) {
-        this.proveedor = proveedorModel;
-    }
 }

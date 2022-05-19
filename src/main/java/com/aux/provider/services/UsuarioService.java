@@ -46,9 +46,9 @@ public class UsuarioService {
         return usuarioRepository.save(usuarioDB);
     }
 
-    public ArrayList<UsuarioModel> obtenerPorEmail(String email){
+    /*public ArrayList<UsuarioModel> obtenerPorEmail(String email){
         return usuarioRepository.findByEmail(email);
-    }
+    }*/
     public String validarUsuario(String email, String clave){
         try{
             if(usuarioRepository.findFirst1ByEmailAndClave(email,clave) != null){

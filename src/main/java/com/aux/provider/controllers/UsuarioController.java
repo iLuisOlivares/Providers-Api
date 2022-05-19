@@ -41,10 +41,10 @@ public class UsuarioController {
         return this.usuarioService.obtenerPorId(id);
     }
 
-    @GetMapping( path = "/query")
+    /*@GetMapping( path = "/query")
     public ArrayList<UsuarioModel> obtenerUsuarioPorEmail(@RequestParam("email") String email){
         return this.usuarioService.obtenerPorEmail(email);
-    }
+    }*/
 
  @GetMapping( path = "/validar")
     public String validarUsuario(@RequestParam("email") String email, @RequestParam("clave") String clave){
