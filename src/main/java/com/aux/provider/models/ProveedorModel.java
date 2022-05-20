@@ -21,13 +21,14 @@ public class ProveedorModel {
     @Column(unique = true, nullable = false)
     private long id;
     private String tipo_id;
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = true, unique = true)
-    @JsonIgnore
+    private boolean activo;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "proveedor", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private UsuarioModel usuario;
-    @OneToOne(fetch=FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "perfil_id", nullable = true, unique = true)
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "proveedor", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private PerfilModel perfil;
     /*@OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "referente_id", nullable = false, unique = true)
@@ -36,10 +37,12 @@ public class ProveedorModel {
     @OneToMany(mappedBy = "proveedor")
     private List<ServicioModel> servicios;
 
-    public ProveedorModel(long id, String tipo_id, UsuarioModel usuario, PerfilModel perfil) {
+
+
+
+    public ProveedorModel(long id, String tipo_id) {
         this.id = id;
         this.tipo_id = tipo_id;
-        this.usuario = usuario;
-        this.perfil = perfil;
+        this.activo = true;
     }
 }

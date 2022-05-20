@@ -41,24 +41,24 @@ public class ProveedorService implements ProveedorInterfaceService {
     }
 
 
-    public ProveedorModel setPerfilToProveedor(long id_perfil, long id_proveedor) throws NoEncontradoException {
+    public PerfilModel setPerfilToProveedor(long id_perfil, long id_proveedor) throws NoEncontradoException {
         log.info("Agregando perfil al proveedor con id: {}", id_proveedor);
         ProveedorModel proveedor = this.getProveedor(id_proveedor);
         PerfilModel perfil = this.getPerfil(id_perfil);
-        proveedor.setPerfil(perfil);
-        return proveedor;
+        perfil.setProveedor(proveedor);
+        log.info(perfil.getProveedor().getTipo_id());
+        return perfil;
 
     }
 
     @Override
-    public ProveedorModel setUsuarioToProveedor(String email, long id_proveedor) throws NoEncontradoException {
+    public UsuarioModel setUsuarioToProveedor(String email, long id_proveedor) throws NoEncontradoException {
         log.info("Agregando usuario al proveedor con id: {}", id_proveedor);
         ProveedorModel proveedor = this.getProveedor(id_proveedor);
         UsuarioModel usuario = this.getUsuario(email);
-
-        proveedor.setUsuario(usuario);
-
-        return proveedor;
+        usuario.setProveedor(proveedor);
+        log.info(usuario.getProveedor().getTipo_id());
+        return usuario;
     }
 
     @Override

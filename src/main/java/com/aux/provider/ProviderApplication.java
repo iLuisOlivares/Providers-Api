@@ -18,12 +18,13 @@ public class ProviderApplication {
 	@Bean
 	CommandLineRunner run(ProveedorService proveedorService){
 		return args -> {
-			UsuarioModel usuario = proveedorService.saveUsuario(
-					new UsuarioModel(1005569145,"luissolivaresp@gmail.com", "Miclave", true));
-			PerfilModel perfil = proveedorService.savePerfil(
-					new PerfilModel(1005569145, "Luis", "Olivares", "direccion", 318544760, "Mifoto.com", "descripcion", "mipagina.com"));
 			ProveedorModel proveedor = proveedorService.saveProveedor(
-					new ProveedorModel(1005569145,"cedula", null,null));
+					new ProveedorModel(23175949,"cedula"));
+			UsuarioModel usuario = proveedorService.saveUsuario(
+					new UsuarioModel(23175949,"luissolivareespdd14@gmail.com", "Miclave", null));
+			PerfilModel perfil = proveedorService.savePerfil(
+					new PerfilModel(23175949, "Luis", "Olivares", "direccion", 318544760, "Mifoto.com", "descripcion", "mipagina.com",null));
+
 
 			proveedorService.setPerfilToProveedor(perfil.getId(), proveedor.getId());
 			proveedorService.setUsuarioToProveedor(usuario.getEmail(), proveedor.getId());
