@@ -7,6 +7,7 @@ import com.aux.provider.repositories.PerfilRepository;
 import com.aux.provider.repositories.ProveedorRepository;
 import com.aux.provider.repositories.UsuarioRepository;
 import com.aux.provider.services.exceptions.NoEncontradoException;
+import com.aux.provider.services.interfaces.ProveedorInterfaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service @Transactional @Slf4j @RequiredArgsConstructor
-public class ProveedorService implements ProveedorIntService {
+public class ProveedorService implements ProveedorInterfaceService {
     private final ProveedorRepository proveedorRepository;
     private final PerfilRepository perfilRepository;
     private final UsuarioRepository usuarioRepository;
@@ -23,33 +24,41 @@ public class ProveedorService implements ProveedorIntService {
 
     @Override
     public ProveedorModel saveProveedor(ProveedorModel proveedorModel) {
+        log.info("Guardando Proveedor en la base de datos");
         return proveedorRepository.save(proveedorModel);
     }
 
     @Override
     public PerfilModel savePerfil(PerfilModel perfilModel) {
+       log.info("Guardando Perfil en la base de datos");
        return  perfilRepository.save(perfilModel);
     }
 
     @Override
     public UsuarioModel saveUsuario(UsuarioModel usuarioModel) {
+        log.info("Guardando Usuario en la base de datos");
         return usuarioRepository.save(usuarioModel);
     }
 
-    public ProveedorModel setPerfilToProveedor(long id_proveedor, long id_perfil) throws NoEncontradoException {
+
+    public ProveedorModel setPerfilToProveedor(long id_perfil, long id_proveedor) throws NoEncontradoException {
         log.info("Agregando perfil al proveedor con id: {}", id_proveedor);
         ProveedorModel proveedor = this.getProveedor(id_proveedor);
         PerfilModel perfil = this.getPerfil(id_perfil);
-
         proveedor.setPerfil(perfil);
-
         return proveedor;
 
     }
 
     @Override
-    public void setUsuarioToProveedor(String email, long id) {
+    public ProveedorModel setUsuarioToProveedor(String email, long id_proveedor) throws NoEncontradoException {
+        log.info("Agregando usuario al proveedor con id: {}", id_proveedor);
+        ProveedorModel proveedor = this.getProveedor(id_proveedor);
+        UsuarioModel usuario = this.getUsuario(email);
 
+        proveedor.setUsuario(usuario);
+
+        return proveedor;
     }
 
     @Override
@@ -79,6 +88,7 @@ public class ProveedorService implements ProveedorIntService {
 
     @Override
     public List<ProveedorModel> getProveedores() {
-        return null;
+        log.info("Recuperando proveedores de la base de datos");
+        return (List<ProveedorModel>) proveedorRepository.findAll();
     }
 }

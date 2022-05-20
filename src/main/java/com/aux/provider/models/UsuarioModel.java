@@ -1,4 +1,7 @@
 package com.aux.provider.models;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,9 +15,8 @@ import javax.persistence.*;
 @Table(name = "usuario")
 public class UsuarioModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Long id;
+    private long id;
     @Column(unique = true, nullable = false)
     private String email;
     private String clave;
@@ -24,5 +26,10 @@ public class UsuarioModel {
 
     private boolean activo;
 
-
+    public UsuarioModel(long id, String email, String clave, boolean activo) {
+        this.id = id;
+        this.email = email;
+        this.clave = clave;
+        this.activo = activo;
+    }
 }

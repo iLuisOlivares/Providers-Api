@@ -1,11 +1,13 @@
 package com.aux.provider.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Data
@@ -15,7 +17,6 @@ import static javax.persistence.FetchType.EAGER;
 public class PerfilModel {
 
     @Id
-    @GeneratedValue( strategy= GenerationType.AUTO )
     @Column(unique = true, nullable = false)
     private long id;
     private String nombre;
@@ -26,8 +27,19 @@ public class PerfilModel {
     private String descripcion;
     private String pagina_web;
 
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "perfil", fetch = FetchType.LAZY)
     private ProveedorModel proveedor;
 
+    public PerfilModel(long id, String nombre, String apellidos, String direccion, long celular, String foto, String descripcion, String pagina_web) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.direccion = direccion;
+        this.celular = celular;
+        this.foto = foto;
+        this.descripcion = descripcion;
+        this.pagina_web = pagina_web;
+    }
 
 }
