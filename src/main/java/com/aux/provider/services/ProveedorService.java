@@ -10,16 +10,35 @@ import com.aux.provider.services.exceptions.NoEncontradoException;
 import com.aux.provider.services.interfaces.ProveedorInterfaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service @Transactional @Slf4j @RequiredArgsConstructor
-public class ProveedorService implements ProveedorInterfaceService {
+public class ProveedorService implements ProveedorInterfaceService, UserDetailsService {
     private final ProveedorRepository proveedorRepository;
     private final PerfilRepository perfilRepository;
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UsuarioModel usuarioModel = usuarioRepository.findByEmail(email)
+                .orElseThrow(()-> new UsernameNotFoundException("Usuario no encontrado"));
+
+            Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority("ROLE_USUARIO"));
+        return new org.springframework.security.core.userdetails.User(usuarioModel.getEmail(), usuarioModel.getClave(), authorities);
+
+    }
 
 
     @Override
@@ -37,6 +56,7 @@ public class ProveedorService implements ProveedorInterfaceService {
     @Override
     public UsuarioModel saveUsuario(UsuarioModel usuarioModel) {
         log.info("Guardando Usuario en la base de datos");
+        usuarioModel.setClave(passwordEncoder.encode(usuarioModel.getClave()));
         return usuarioRepository.save(usuarioModel);
     }
 
@@ -91,4 +111,6 @@ public class ProveedorService implements ProveedorInterfaceService {
         log.info("Recuperando proveedores de la base de datos");
         return (List<ProveedorModel>) proveedorRepository.findAll();
     }
+
+
 }

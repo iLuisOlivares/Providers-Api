@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class ProviderApplication {
@@ -15,13 +17,18 @@ public class ProviderApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProviderApplication.class, args);
 	}
+
 	@Bean
+	PasswordEncoder passwordEncoder(){
+		return new BCryptPasswordEncoder();
+	}
+
 	CommandLineRunner run(ProveedorService proveedorService){
 		return args -> {
 			ProveedorModel proveedor = proveedorService.saveProveedor(
 					new ProveedorModel(23175949,"cedula"));
 			UsuarioModel usuario = proveedorService.saveUsuario(
-					new UsuarioModel(23175949,"luissolivareespdd14@gmail.com", "Miclave", null));
+					new UsuarioModel(23175949,"luissolivarees14@gmail.com", "1234", null));
 			PerfilModel perfil = proveedorService.savePerfil(
 					new PerfilModel(23175949, "Luis", "Olivares", "direccion", 318544760, "Mifoto.com", "descripcion", "mipagina.com",null));
 
