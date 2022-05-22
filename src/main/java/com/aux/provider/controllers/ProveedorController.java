@@ -33,18 +33,6 @@ public class ProveedorController {
         return  ResponseEntity.created(uri).body(proveedorService.saveProveedor(proveedorModel));
     }
 
-    @PostMapping("/perfil/save")
-    public ResponseEntity<PerfilModel> savePerfil(@RequestBody PerfilModel perfilModel){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/perfil/save").toUriString());
-        return  ResponseEntity.created(uri).body(proveedorService.savePerfil(perfilModel));
-    }
-
-    @PostMapping("/usuario/save")
-    public ResponseEntity<UsuarioModel> saveUsuario(@RequestBody UsuarioModel usuarioModel){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/usuario/save").toUriString());
-        return  ResponseEntity.created(uri).body(proveedorService.saveUsuario(usuarioModel));
-    }
-
     @PostMapping("/perfil/setToProveedor")
     public ResponseEntity<?> setPerfilToPro(@RequestBody setPerfilForm form) throws NoEncontradoException {
         proveedorService.setPerfilToProveedor(form.getId_perfil(), form.getId_proveedor());

@@ -7,18 +7,27 @@ import com.aux.provider.services.PerfilService;
 import com.aux.provider.services.ProveedorService;
 import com.aux.provider.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api")
 public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
     ProveedorService proveedorService;
     PerfilService perfilService;
+
+    @PostMapping("/usuario/save")
+    public ResponseEntity<UsuarioModel> saveUsuario(@RequestBody UsuarioModel usuarioModel){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/usuario/save").toUriString());
+        return  ResponseEntity.created(uri).body(usuarioService.saveUsuario(usuarioModel));
+    }
 
     @GetMapping()
     public ArrayList<UsuarioModel> obtenerUsuarios(){
@@ -46,24 +55,9 @@ public class UsuarioController {
         return this.usuarioService.obtenerPorEmail(email);
     }*/
 
- @GetMapping( path = "/validar")
-    public String validarUsuario(@RequestParam("email") String email, @RequestParam("clave") String clave){
-     return this.usuarioService.validarUsuario(email,clave);
-
-    }
-
     @PutMapping("/{id}")
     public UsuarioModel actualizarUsuario(@RequestBody UsuarioModel usuario,@PathVariable("id") Long id){
         return this.usuarioService.actualizarUsuario(usuario, id);
     }
 
-    @DeleteMapping(path = "/{id}")
-    public String eliminarPorId(@PathVariable("id") Long id){
-        boolean msg = this.usuarioService.eliminarUsuario(id);
-        if(msg){
-            return "Se elimino el usuario con id: " + id;
-        }else {
-            return "No se pudo eliminar el usuario con id: " + id;
-        }
-    }
 }

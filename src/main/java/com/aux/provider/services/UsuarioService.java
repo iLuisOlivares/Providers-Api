@@ -2,17 +2,26 @@ package com.aux.provider.services;
 
 import com.aux.provider.models.UsuarioModel;
 import com.aux.provider.repositories.UsuarioRepository;
+import com.aux.provider.services.exceptions.NoEncontradoException;
+import com.aux.provider.services.interfaces.UsuarioInterfaceService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
-@Service
-public class UsuarioService {
+@Service @Transactional
+@Slf4j
+@RequiredArgsConstructor
+public class UsuarioService implements UsuarioInterfaceService {
     @Autowired
     UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public ArrayList<UsuarioModel> obtenerUsuarios(){
        return(ArrayList<UsuarioModel>) usuarioRepository.findAll();
@@ -46,30 +55,20 @@ public class UsuarioService {
         return usuarioRepository.save(usuarioDB);
     }
 
-    /*public ArrayList<UsuarioModel> obtenerPorEmail(String email){
-        return usuarioRepository.findByEmail(email);
-    }*/
-    public String validarUsuario(String email, String clave){
-        try{
-            if(usuarioRepository.findFirst1ByEmailAndClave(email,clave) != null){
-                return "Usuario Loggeado";
-            }else if(usuarioRepository.findFirst1ByEmail(email) != null){
-                return "Contraseña incorrecta";
-            }else{
-                return "Usuario no registrado";
-            }
-        }catch (Exception e){
-            return e.getMessage();
-        }
+
+    @Override
+    public UsuarioModel saveUsuario(UsuarioModel usuarioModel) {
+        log.info("Guardando Usuario en la base de datos:{}", usuarioModel);
+        usuarioModel.setClave(passwordEncoder.encode(usuarioModel.getClave()));
+        return usuarioRepository.save(usuarioModel);
     }
 
-    public boolean eliminarUsuario(Long id){
-        try{
-            usuarioRepository.deleteById(id);
-            return true;
-        }catch (Exception err){
-            return false;
-        }
+    @Override
+    public UsuarioModel getUsuario(String email) throws NoEncontradoException {
+        log.info("Buscando usuario con email: {}", email);
+        return usuarioRepository.findByEmail(email).orElseThrow(
+                () -> new NoEncontradoException("Usuario no existe")
+        );
     }
 
 }

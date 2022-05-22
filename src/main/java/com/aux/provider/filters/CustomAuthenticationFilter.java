@@ -34,7 +34,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-           String email = request.getParameter("email");
+       String email = request.getParameter("email");
        String clave = request.getParameter("clave");
        log.info("El email es: {}", email);
        log.info("La clave es:{}", clave);
@@ -49,7 +49,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         String accesToken = JWT.create().withSubject(usuario.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 100))
                 .withIssuer(request.getRequestURL().toString())
-                .withClaim("rol", usuario.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining()))
+                .withClaim("roles", usuario.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         String refreshToken = JWT.create().withSubject(usuario.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 100))
@@ -58,8 +58,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         /*response.setHeader("acces_token", accesToken);
         response.setHeader("refresh_token", refreshToken);*/
         Map<String,String> tokens = new HashMap<>();
-        tokens.put("acces_token",accesToken);
         tokens.put("refresh_token",refreshToken);
+        tokens.put("acces_token",accesToken);
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }
