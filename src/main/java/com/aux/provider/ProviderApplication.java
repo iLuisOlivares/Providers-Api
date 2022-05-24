@@ -26,16 +26,17 @@ public class ProviderApplication {
 	}
 	CommandLineRunner run(ProveedorService proveedorService, UsuarioService usuarioService, PerfilService perfilService){
 		return args -> {
+			long celular = 318454;
 			ProveedorModel proveedor = proveedorService.saveProveedor(
 					new ProveedorModel(1005569145,"cedula"));
 			UsuarioModel usuario = usuarioService.saveUsuario(
 					new UsuarioModel(1005569145,"luiss@gmail.com", "1234", null));
 			PerfilModel perfil = perfilService.savePerfil(
-					new PerfilModel(1005569145, "Sebastian", "Puello", "direccion", 318544760, "Mifoto.com", "descripcion", "mipagina.com",null));
+					new PerfilModel("Sebastian", "Puello", "direccion","Cartagena", celular, "Mifoto.com", "descripcion", "mipagina.com"));
 
 
-			proveedorService.setPerfilToProveedor(perfil.getId(), proveedor.getId());
-			proveedorService.setUsuarioToProveedor(usuario.getEmail(), proveedor.getId());
+			perfilService.setPerfilToProveedor(perfil.getId(), proveedor.getId());
+			usuarioService.setUsuarioToProveedor(usuario.getEmail(), proveedor.getId());
 		};
 	}
 

@@ -33,17 +33,6 @@ public class ProveedorController {
         return  ResponseEntity.created(uri).body(proveedorService.saveProveedor(proveedorModel));
     }
 
-    @PostMapping("/perfil/setToProveedor")
-    public ResponseEntity<?> setPerfilToPro(@RequestBody setPerfilForm form) throws NoEncontradoException {
-        proveedorService.setPerfilToProveedor(form.getId_perfil(), form.getId_proveedor());
-        return  ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/usuario/setToProveedor")
-    public ResponseEntity<?> setUsuarioToPro(@RequestBody setUsuarioForm form) throws NoEncontradoException {
-        proveedorService.setUsuarioToProveedor(form.getEmail_usuario(), form.getId_proveedor());
-        return  ResponseEntity.ok().build();
-    }
 
 
 }

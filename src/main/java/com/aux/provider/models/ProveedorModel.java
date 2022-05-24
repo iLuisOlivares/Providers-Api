@@ -35,6 +35,7 @@ public class ProveedorModel {
     private ReferenteModel referente;*/
 
     @OneToMany(mappedBy = "proveedor")
+    @JsonManagedReference
     private List<ServicioModel> servicios;
 
 

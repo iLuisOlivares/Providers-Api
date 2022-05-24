@@ -8,4 +8,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface PerfilRepository extends CrudRepository<PerfilModel, Long> {
+    public abstract UsuarioModel findByProveedor(long id_proveedor);
 }

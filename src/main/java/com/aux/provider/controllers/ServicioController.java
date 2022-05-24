@@ -1,29 +1,29 @@
 package com.aux.provider.controllers;
 
 import com.aux.provider.models.ServicioModel;
-import com.aux.provider.models.UsuarioModel;
 import com.aux.provider.services.ServicioService;
+import com.aux.provider.services.exceptions.NoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/servicios")
+@RequestMapping("/api")
 public class ServicioController {
     @Autowired
     ServicioService servicioService;
 
-    @GetMapping()
-    public ArrayList<ServicioModel> obtenerServicios(){return servicioService.obtenerServicios();}
+    @GetMapping("/servicios")
+    public ArrayList<ServicioModel> obtenerServicios(){return servicioService.getServicios();}
 
-    @PostMapping()
-    public String guardarServicio(@RequestBody ServicioModel servicio){
-        boolean msg = this.servicioService.guardarServicio(servicio);
-        if(msg){
-            return "Se guardo el usuario con correctamente";
-        }else {
-            return "Error: No se pudo guardar el usuario";
-        }
+    @PostMapping("/servicios/save/{id}")
+    public ServicioModel saveServicio(@RequestBody ServicioModel servicio, @PathVariable("id") Long id) throws NoEncontradoException {
+        return servicioService.saveServicio(servicio, id);
+
+    }
+    @PutMapping("/servicios/update/{id}/")
+    public ServicioModel UpdateServicio(@RequestBody ServicioModel servicio, @PathVariable("id") Long id) throws NoEncontradoException {
+        return servicioService.updateServicio(servicio,id);
     }
 }

@@ -6,13 +6,18 @@ import com.aux.provider.models.UsuarioModel;
 import com.aux.provider.services.PerfilService;
 import com.aux.provider.services.ProveedorService;
 import com.aux.provider.services.UsuarioService;
+import com.aux.provider.services.exceptions.NoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 @RestController
@@ -20,8 +25,8 @@ import java.util.Optional;
 public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
-    ProveedorService proveedorService;
-    PerfilService perfilService;
+
+
 
     @PostMapping("/usuario/save")
     public ResponseEntity<UsuarioModel> saveUsuario(@RequestBody UsuarioModel usuarioModel){
@@ -47,7 +52,7 @@ public class UsuarioController {
 
     @GetMapping( path = "/{id}")
     public Optional<UsuarioModel> obtenerUsuarioPorId(@PathVariable("id") Long id){
-        return this.usuarioService.obtenerPorId(id);
+        return usuarioService.obtenerPorId(id);
     }
 
     /*@GetMapping( path = "/query")
@@ -57,7 +62,13 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public UsuarioModel actualizarUsuario(@RequestBody UsuarioModel usuario,@PathVariable("id") Long id){
-        return this.usuarioService.actualizarUsuario(usuario, id);
+        return usuarioService.updateUsuario(usuario, id);
+    }
+
+    @PostMapping("/usuario/setToProveedor")
+    public ResponseEntity<?> setUsuarioToPro(@RequestBody setUsuarioForm form) throws NoEncontradoException {
+        usuarioService.setUsuarioToProveedor(form.getEmail_usuario(), form.getId_proveedor());
+        return  ResponseEntity.ok().build();
     }
 
 }
