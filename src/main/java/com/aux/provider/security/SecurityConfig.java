@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST,"/email/send").permitAll();
         http.authorizeRequests().antMatchers(GET,"api/proveedores").permitAll();
         http.authorizeRequests().antMatchers(GET,"api/servicios").permitAll();
-        http.authorizeRequests().antMatchers(GET,"api/servicio/**").permitAll();
+        http.authorizeRequests().antMatchers(GET,"api/servicios/**").permitAll();
 
         //Peticiones permitidas para usuarios Registrados
         http.authorizeRequests().antMatchers(POST, "/api/perfil/save/**").hasAuthority("ROLE_USUARIO");
@@ -56,6 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST, "/api/usuario/save/**").hasAuthority("ROLE_USUARIO");
         http.authorizeRequests().antMatchers(POST, "/api/servicios/save/**").hasAuthority("ROLE_USUARIO");
         http.authorizeRequests().antMatchers(POST, "/api/servicios/update/**").hasAuthority("ROLE_USUARIO");
+        http.authorizeRequests().antMatchers(POST, "/api/servicios/**").hasAuthority("ROLE_USUARIO");
+
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(filter);
         http.addFilterBefore(new CustomAuthorizationFilter(new TokenFilter()), UsernamePasswordAuthenticationFilter.class);

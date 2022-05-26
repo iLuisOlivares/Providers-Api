@@ -21,7 +21,7 @@ public class ServicioController {
     public ArrayList<ServicioModel> obtenerServicios(){return servicioService.getServicios();}
 
     // Peticion GET para obtener una lista de servicios por el id del proveedor
-    @GetMapping("/servicio/{id}")
+    @GetMapping("/servicios/{id}")
     public List<ServicioModel> getServicio(@PathVariable("id") Long id){
         return servicioService.getServiciosProv(id);
     }
