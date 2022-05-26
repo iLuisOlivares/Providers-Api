@@ -4,7 +4,6 @@ import com.aux.provider.filters.CustomAuthenticationFilter;
 import com.aux.provider.filters.CustomAuthorizationFilter;
 import com.aux.provider.filters.TokenFilter;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,9 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.http.HttpMethod.*;
@@ -70,9 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //Configuracion de los cors
         http.cors().configurationSource(request -> {
             var cors = new CorsConfiguration();
-            cors.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://127.0.0.1:80", "*"));
-            cors.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS"));
-            cors.setAllowedHeaders(Collections.singletonList("*"));
+            cors.setAllowedOrigins(List.of("http://localhost:4200", "http://127.0.0.1:80", "*"));
+            cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
+            cors.setAllowedHeaders(List.of("*"));
             return cors;
         });
 
