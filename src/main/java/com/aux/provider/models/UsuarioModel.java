@@ -29,11 +29,10 @@ public class UsuarioModel {
     @JsonBackReference
     private ProveedorModel proveedor;
 
-
-
     public UsuarioModel(long id, String email, String clave) {
         this.id = id;
         this.email = email;
         this.clave = clave;
     }
+
 }

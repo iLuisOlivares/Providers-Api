@@ -46,7 +46,7 @@ public class PerfilModel {
         this.pagina_web = pagina_web;
     }
 
-    public void setPerfil(String nombre, String apellidos, String direccion, long celular, String foto, String descripcion, String pagina_web) {
+    public void setPerfil(String nombre, String apellidos, String direccion,String ciudad, long celular, String foto, String descripcion, String pagina_web) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.direccion = direccion;
@@ -54,5 +54,6 @@ public class PerfilModel {
         this.foto = foto;
         this.descripcion = descripcion;
         this.pagina_web = pagina_web;
+        this.ciudad = ciudad;
     }
 }

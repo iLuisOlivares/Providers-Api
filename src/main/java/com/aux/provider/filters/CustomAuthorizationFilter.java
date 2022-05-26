@@ -38,10 +38,10 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equals("/api/login")){
-            filterChain.doFilter(request, response);
-
-        }else {
+        if(request.getServletPath().equals("/api/login" )|| request.getServletPath().equals("/api/proveedores") || request.getServletPath().equals("/api/proveedor/save")){
+                filterChain.doFilter(request, response);
+        }
+        else {
             try {
                 log.info("Extrayendo token");
                 String token = tokenFilter.extractAuthorizationToken(request);

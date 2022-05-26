@@ -6,6 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface ProveedorRepository extends CrudRepository<ProveedorModel, Long> {
-    @Override
-    Optional<ProveedorModel> findById(Long aLong);
+    Optional<ProveedorModel> findByUsuario_Email(String email);
 }

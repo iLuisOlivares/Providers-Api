@@ -30,6 +30,10 @@ public class ServicioModel {
     @JsonBackReference
     private ProveedorModel proveedor;
 
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
     public boolean isActivo() {
         return activo;
     }

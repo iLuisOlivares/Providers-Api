@@ -25,6 +25,13 @@ public class PerfilController {
         return  ResponseEntity.created(uri).body(perfilService.savePerfil(perfilModel));
     }
 
+    @GetMapping("/perfil/{id}")
+    public ResponseEntity<PerfilModel> getPerfil(@PathVariable("id") long id) throws NoEncontradoException {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/api/perfil/{id}").toUriString());
+        return  ResponseEntity.created(uri).body(perfilService.getPerfilByProveedor(id));
+    }
+
     @PutMapping("/perfil/update/{id}")
     public ResponseEntity<PerfilModel> updatePerfil(@RequestBody PerfilModel perfilModel, @PathVariable("id") Long id) throws NoEncontradoException {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -32,10 +39,10 @@ public class PerfilController {
         return  ResponseEntity.created(uri).body(perfilService.updatePerfil(perfilModel,id));
     }
 
-    @PostMapping("/perfil/setToProveedor")
+    /* @PostMapping("/perfil/setToProveedor")
     public ResponseEntity<?> setPerfilToPro(@RequestBody setPerfilForm form) throws NoEncontradoException {
         perfilService.setPerfilToProveedor(form.getId_perfil(), form.getId_proveedor());
         return  ResponseEntity.ok().build();
-    }
+    }*/
 
 }

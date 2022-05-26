@@ -24,7 +24,7 @@ public class TokenFilter implements TokenInterface {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             return authorizationHeader.substring("Bearer ".length());
         }
-        throw new TokenException("The token is missing");
+        throw new TokenException("Falta el token de acceso");
     }
 
     @Override

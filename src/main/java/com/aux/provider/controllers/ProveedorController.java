@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @RequestMapping("/api")
 public class ProveedorController {
     private final ProveedorService proveedorService;
@@ -25,6 +26,14 @@ public class ProveedorController {
     @GetMapping("/proveedores")
     public ResponseEntity<List<ProveedorModel>> getProveedores(){
         return  ResponseEntity.ok().body(proveedorService.getProveedores());
+    }
+    @GetMapping("/proveedor/{id}")
+    public ResponseEntity<ProveedorModel> getProveedor(@PathVariable("id") Long id) throws NoEncontradoException {
+        return  ResponseEntity.ok().body(proveedorService.getProveedor(id));
+    }
+    @GetMapping("/proveedor/email/{email}")
+    public ResponseEntity<ProveedorModel> getProveedorByEmail(@PathVariable("email") String email) throws NoEncontradoException {
+        return  ResponseEntity.ok().body(proveedorService.getProveedorbyEmail(email));
     }
 
     @PostMapping("/proveedor/save")
@@ -37,13 +46,8 @@ public class ProveedorController {
 
 }
     @Data
-    class setUsuarioForm{
-        private long id_proveedor;
-        private String email_usuario;
-    }
+    class mensaje{
+    String mensaje;
+    boolean correcto;
 
-    @Data
-    class setPerfilForm{
-        private long id_proveedor;
-        private long id_perfil;
     }

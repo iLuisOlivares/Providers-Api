@@ -9,6 +9,4 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends CrudRepository<UsuarioModel,Long> {
     public Optional<UsuarioModel> findByEmail(String email);
-    public abstract UsuarioModel findFirst1ByEmail(String email);
-    public abstract UsuarioModel findFirst1ByEmailAndClave(String email, String clave);
 }

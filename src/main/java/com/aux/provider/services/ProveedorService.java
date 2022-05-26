@@ -15,6 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,7 +27,7 @@ import java.util.List;
 public class ProveedorService implements ProveedorInterfaceService{
     @Autowired
     private final ProveedorRepository proveedorRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
    /* @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -41,14 +42,23 @@ public class ProveedorService implements ProveedorInterfaceService{
     @Override
     public ProveedorModel saveProveedor(ProveedorModel proveedorModel) {
         log.info("Guardando Proveedor en la base de datos");
+        proveedorModel.getUsuario().setClave(passwordEncoder.encode(proveedorModel.getUsuario().getClave()));
         return proveedorRepository.save(proveedorModel);
     }
 
     @Override
     public ProveedorModel getProveedor(long id) throws NoEncontradoException {
-       log.info("Buscando proveedor con id: {}", id);
-       return proveedorRepository.findById(id).orElseThrow(
-               () -> new NoEncontradoException("Usuario no existe")
+        log.info("Buscando proveedor con id: {}", id);
+        return proveedorRepository.findById(id).orElseThrow(
+                () -> new NoEncontradoException("Proveedor no existe")
+        );
+    }
+
+
+    public ProveedorModel getProveedorbyEmail(String email) throws NoEncontradoException {
+       log.info("Buscando proveedor con email: {}", email);
+       return proveedorRepository.findByUsuario_Email(email).orElseThrow(
+               () -> new NoEncontradoException("Proveedor no existe")
        );
     }
 

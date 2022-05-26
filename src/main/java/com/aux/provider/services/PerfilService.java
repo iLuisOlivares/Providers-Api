@@ -39,12 +39,11 @@ public class PerfilService implements PerfilInterfaceService {
     @Override
     public PerfilModel updatePerfil(PerfilModel nperfil, Long proveedor_id) throws NoEncontradoException {
         log.info(String.valueOf(proveedor_id));
-        ProveedorModel proveedor = proveedorRepository.findById(proveedor_id).orElseThrow(
-                () -> new NoEncontradoException("Proveedor no existe")
+        PerfilModel perfil = perfilRepository.findFirst1ByProveedor_Id(proveedor_id).orElseThrow(
+                () -> new NoEncontradoException("Perfil no existe")
         );
-        PerfilModel perfil = this.getPerfil(proveedor.getPerfil().getId());
         perfil.setPerfil(nperfil.getNombre(),nperfil.getApellidos(),
-                nperfil.getDireccion(),nperfil.getCelular(),nperfil.getFoto(),
+                nperfil.getDireccion(), nperfil.getCiudad() ,nperfil.getCelular(),nperfil.getFoto(),
                 nperfil.getDescripcion(), nperfil.getPagina_web());
 
         log.info("Guardando Perfil en la base de datos");
@@ -55,6 +54,13 @@ public class PerfilService implements PerfilInterfaceService {
     public PerfilModel getPerfil(long id) throws NoEncontradoException {
         log.info("Buscando perfil con id: {}", id);
         return perfilRepository.findById(id).orElseThrow(
+                () -> new NoEncontradoException("Perfil no existe")
+        );
+    }
+
+    public PerfilModel getPerfilByProveedor(long id) throws NoEncontradoException {
+        log.info("Buscando perfil de proveedor con id: {}", id);
+        return perfilRepository.findFirst1ByProveedor_Id(id).orElseThrow(
                 () -> new NoEncontradoException("Perfil no existe")
         );
     }

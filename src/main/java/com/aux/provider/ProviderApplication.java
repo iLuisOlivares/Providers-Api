@@ -26,7 +26,7 @@ public class ProviderApplication {
 	}
 	CommandLineRunner run(ProveedorService proveedorService, UsuarioService usuarioService, PerfilService perfilService){
 		return args -> {
-			long celular = 318454;
+			/*long celular = 318454;
 			ProveedorModel proveedor = proveedorService.saveProveedor(
 					new ProveedorModel(1005569145,"cedula"));
 			UsuarioModel usuario = usuarioService.saveUsuario(
@@ -36,7 +36,7 @@ public class ProviderApplication {
 
 
 			perfilService.setPerfilToProveedor(perfil.getId(), proveedor.getId());
-			usuarioService.setUsuarioToProveedor(usuario.getEmail(), proveedor.getId());
+			usuarioService.setUsuarioToProveedor(usuario.getEmail(), proveedor.getId());*/
 		};
 	}
 

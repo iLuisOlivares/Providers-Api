@@ -87,13 +87,5 @@ public class UsuarioService implements UsuarioInterfaceService, UserDetailsServi
         );
     }
 
-    public UsuarioModel setUsuarioToProveedor(String email, long id_proveedor) throws NoEncontradoException {
-        log.info("Agregando usuario al proveedor con id: {}", id_proveedor);
-        ProveedorModel proveedor = proveedorService.getProveedor(id_proveedor);
-        UsuarioModel usuario = this.getUsuario(email);
-        usuario.setProveedor(proveedor);
-        log.info(usuario.getProveedor().getTipo_id());
-        return usuario;
-    }
 
 }

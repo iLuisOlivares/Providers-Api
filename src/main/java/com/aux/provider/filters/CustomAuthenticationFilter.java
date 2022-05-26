@@ -2,6 +2,7 @@ package com.aux.provider.filters;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.aux.provider.models.ProveedorModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -60,6 +61,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Map<String,String> tokens = new HashMap<>();
         tokens.put("refresh_token",refreshToken);
         tokens.put("acces_token",accesToken);
+        tokens.put("usuario_id",usuario.getUsername());
+        tokens.put("conectado", "true");
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }

@@ -65,10 +65,10 @@ public class UsuarioController {
         return usuarioService.updateUsuario(usuario, id);
     }
 
-    @PostMapping("/usuario/setToProveedor")
+   /* @PostMapping("/usuario/setToProveedor")
     public ResponseEntity<?> setUsuarioToPro(@RequestBody setUsuarioForm form) throws NoEncontradoException {
         usuarioService.setUsuarioToProveedor(form.getEmail_usuario(), form.getId_proveedor());
         return  ResponseEntity.ok().build();
-    }
+    }*/
 
 }

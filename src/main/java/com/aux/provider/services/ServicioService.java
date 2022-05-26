@@ -23,8 +23,6 @@ public class ServicioService {
     ProveedorService proveedorService;
 
 
-
-
     public ArrayList<ServicioModel> getServicios(){
         return (ArrayList< ServicioModel>) servicioRepository.findAll();
     }
@@ -35,37 +33,45 @@ public class ServicioService {
         log.info("Agregando servicio al proveedor");
         servicio.setProveedor(proveedor);
         log.info("Guardando servicio en la base de datos");
-
         return servicioRepository.save(servicio);
     }
+        public ServicioModel updateServicio(ServicioModel servicio, Long id) throws NoEncontradoException {
+            log.info("Guardando servicio en la base de datos {}", servicio);
+            if(servicioRepository.existsById(servicio.getId())){
+                if(servicio.isActivo()){
+                    log.info("Modificando servicio del proveedor con id: {}", id);
+                    ServicioModel servicioOld = this.getServicio(servicio.getId());
+                    servicioOld.setServicio(servicio.getTitulo(),servicio.getArea_servicio(),
+                    servicio.getServicio_especifico(),servicio.getDescripcion(),servicio.getPrecio());
+                    return servicioRepository.save(servicioOld);
 
-    public ServicioModel updateServicio(ServicioModel servicio, Long id) throws NoEncontradoException {
-        log.info("Guardando servicio en la base de datos");
-        if(servicioRepository.existsById(id)){
-          servicio = this.getServicio(id);
-          servicio.setServicio(servicio.getTitulo(),servicio.getArea_servicio(),
-                  servicio.getServicio_especifico(),servicio.getDescripcion(),servicio.getPrecio());
-          return servicio;
-        }else {
-        return servicioRepository.save(servicio);
+                }else{
+                    log.info("Desactivando servicio del proveedor con id: {}", id);
+                    ServicioModel servicioOld = this.getServicio(servicio.getId());
+                    servicioOld.setActivo(servicio.isActivo());
+                    return servicioRepository.save(servicioOld);
+                }
+            }else {
+                log.info("Buscando al proveedor con id: {}", id);
+                ProveedorModel proveedor = proveedorService.getProveedor(id);
+                log.info("Agregando servicio al proveedor");
+                servicio.setProveedor(proveedor);
+                log.info("Guardando servicio en la base de datos");
+                return servicioRepository.save(servicio);
+
+            }
         }
 
-    }
-
-    public ServicioModel setServicioToProveedor(long id_servicio, long id_proveedor) throws NoEncontradoException {
-        log.info("Agregando perfil al proveedor con id: {}", id_proveedor);
-        ProveedorModel proveedor = proveedorService.getProveedor(id_proveedor);
-        ServicioModel servicio = this.getServicio(id_servicio);
-        servicio.setProveedor(proveedor);
-        List<ServicioModel> listServicio = proveedor.getServicios();
-        listServicio.add(servicio);
-        proveedor.setServicios(listServicio);
-        log.info(servicio.getProveedor().getTipo_id());
-        return servicio;
-    }
 
     public ServicioModel getServicio(Long id) throws NoEncontradoException {
         return servicioRepository.findById(id).orElseThrow( ()-> new NoEncontradoException("Servicio no encontrado"));
     }
 
+    public List<ServicioModel> getServiciosByProveedor(Long id) {
+        return servicioRepository.findByProveedor_Id(id);
+    }
+
+    public List<ServicioModel> getServiciosProv(Long id) {
+        return servicioRepository.findByProveedor_IdAndActivo(id,true);
+    }
 }
