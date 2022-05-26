@@ -21,21 +21,29 @@ import java.util.List;
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @RequestMapping("/api")
 public class ProveedorController {
+    //Invocamos los servicios(Acciones permitidas) que le corresponden al controlador
     private final ProveedorService proveedorService;
 
+    //Peticion GET para obtener la informacion de todos los proveedores
     @GetMapping("/proveedores")
     public ResponseEntity<List<ProveedorModel>> getProveedores(){
         return  ResponseEntity.ok().body(proveedorService.getProveedores());
     }
+
+    //Peticion GET para obtener la informacion de un proveedor por medio del ID
+
     @GetMapping("/proveedor/{id}")
     public ResponseEntity<ProveedorModel> getProveedor(@PathVariable("id") Long id) throws NoEncontradoException {
         return  ResponseEntity.ok().body(proveedorService.getProveedor(id));
     }
+
+    //Peticion GET para obtener la informacion de un proveedor por medio del Email
     @GetMapping("/proveedor/email/{email}")
     public ResponseEntity<ProveedorModel> getProveedorByEmail(@PathVariable("email") String email) throws NoEncontradoException {
         return  ResponseEntity.ok().body(proveedorService.getProveedorbyEmail(email));
     }
 
+    //Peticion POST para guardar la informacion del proveedor a la base de datos
     @PostMapping("/proveedor/save")
     public ResponseEntity<ProveedorModel> saveProveedor(@RequestBody ProveedorModel proveedorModel){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/proveedor/save").toUriString());
@@ -45,9 +53,3 @@ public class ProveedorController {
 
 
 }
-    @Data
-    class mensaje{
-    String mensaje;
-    boolean correcto;
-
-    }

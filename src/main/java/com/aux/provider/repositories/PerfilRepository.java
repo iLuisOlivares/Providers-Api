@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PerfilRepository extends CrudRepository<PerfilModel, Long> {
+
+    //Consulta SQL a la base de datos para encontrar un Perfil a partir del id del proveedor
     Optional<PerfilModel> findFirst1ByProveedor_Id(long id_proveedor);
 
 

@@ -5,6 +5,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 import javax.servlet.http.HttpServletRequest;
 
+//Interface para el Token filter
 public interface TokenInterface {
     String extractAuthorizationToken(HttpServletRequest request) throws TokenException;
 

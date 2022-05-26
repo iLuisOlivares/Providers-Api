@@ -33,6 +33,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         this.authenticationManager = authenticationManager;
     }
 
+    // Filtros de autenticacion de usuario para darle acceso a las respectivas peticiones
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
        String email = request.getParameter("email");
@@ -43,21 +44,21 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
        return authenticationManager.authenticate(AuthenticationToken);
     }
 
+    // Filtro cuando la autenticacion es satisfactoria
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         User usuario = (User)authentication.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        Algorithm algorithm = Algorithm.HMAC256("AUXPROVIDER".getBytes());
         String accesToken = JWT.create().withSubject(usuario.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 200 * 60 * 100))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 100 * 700 * 60 * 100))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", usuario.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         String refreshToken = JWT.create().withSubject(usuario.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 400 * 60 * 100))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 100 * 700 * 60 * 100))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
-        /*response.setHeader("acces_token", accesToken);
-        response.setHeader("refresh_token", refreshToken);*/
+       // Enviar un Json con los tokens, y id del usuario
         Map<String,String> tokens = new HashMap<>();
         tokens.put("refresh_token",refreshToken);
         tokens.put("acces_token",accesToken);

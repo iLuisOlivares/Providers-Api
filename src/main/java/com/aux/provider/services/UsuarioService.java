@@ -31,6 +31,7 @@ public class UsuarioService implements UsuarioInterfaceService, UserDetailsServi
     ProveedorService proveedorService;
     private final PasswordEncoder passwordEncoder;
 
+    //Agregar un rol autoritario el usuario para poder hacer uso de peticiones protegidas
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UsuarioModel usuarioModel = usuarioRepository.findByEmail(email)
@@ -39,27 +40,35 @@ public class UsuarioService implements UsuarioInterfaceService, UserDetailsServi
         authorities.add(new SimpleGrantedAuthority("ROLE_USUARIO"));
         return new org.springframework.security.core.userdetails.User(usuarioModel.getEmail(), usuarioModel.getClave(), authorities);
     }
+
+    //Logica para la obtener una lista de los usuarios
     public ArrayList<UsuarioModel> obtenerUsuarios(){
-       return(ArrayList<UsuarioModel>) usuarioRepository.findAll();
+        //Invoca al repositorio para realizar la consulta de todos los usuarios
+        return(ArrayList<UsuarioModel>) usuarioRepository.findAll();
     }
 
-    public boolean guardarUsuario(UsuarioModel usuario){
-        boolean usuarioDB = usuarioRepository.existsById(usuario.getId());
-        if(usuarioDB){
-            return false;
-        }else{
-             usuarioRepository.save(usuario);
-             return true;
-        }
+    //Logica para la Obtener un usuario por su email
+    @Override
+    public UsuarioModel getUsuario(String email) throws NoEncontradoException {
+        log.info("Buscando usuario con email: {}", email);
+        //Invoca al repositorio para realizar la consulta de un usuario por email
+        return usuarioRepository.findByEmail(email).orElseThrow(
+                () -> new NoEncontradoException("Usuario no existe")
+        );
     }
 
+    //Logica para la obtener un usuario por su id
+    @Override
     public Optional<UsuarioModel> obtenerPorId(Long id){
+        //Invoca al repositorio para realizar la consulta y encontrar un usuario por id
         return usuarioRepository.findById(id);
     }
 
+    //Logica para la actualizar un usuario por su id
+    @Override
     public UsuarioModel updateUsuario(UsuarioModel usuario, Long usuarioId) {
         UsuarioModel usuarioDB = usuarioRepository.findById(usuarioId).get();
-
+        //Comprobar que los campos no sean nulos para modificar al usuario
         if (Objects.nonNull(usuario.getEmail()) && !"".equalsIgnoreCase(usuario.getEmail())) {
             usuarioDB.setEmail(usuario.getEmail());
         }
@@ -68,24 +77,23 @@ public class UsuarioService implements UsuarioInterfaceService, UserDetailsServi
             usuarioDB.setClave(passwordEncoder.encode(usuario.getClave()));
         }
 
+        //Posteriormente se invoca al repositorio para actualizarlo en la base de datos
         return usuarioRepository.save(usuarioDB);
     }
 
 
+    //Logica para la guardar un usuario
+
     @Override
     public UsuarioModel saveUsuario(UsuarioModel usuarioModel) {
         log.info("Guardando Usuario en la base de datos:{}", usuarioModel);
+        //Encripta la clave del usuario
         usuarioModel.setClave(passwordEncoder.encode(usuarioModel.getClave()));
+        //Posteriormente se invoca al repositorio para guardarlo en la base de datos
         return usuarioRepository.save(usuarioModel);
     }
 
-    @Override
-    public UsuarioModel getUsuario(String email) throws NoEncontradoException {
-        log.info("Buscando usuario con email: {}", email);
-        return usuarioRepository.findByEmail(email).orElseThrow(
-                () -> new NoEncontradoException("Usuario no existe")
-        );
-    }
+
 
 
 }

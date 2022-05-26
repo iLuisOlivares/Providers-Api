@@ -8,8 +8,10 @@ import com.aux.provider.services.exceptions.NoEncontradoException;
 import java.util.List;
 
 public interface ProveedorInterfaceService {
-    ProveedorModel saveProveedor(ProveedorModel proveedorModel);
+
     ProveedorModel getProveedor(long id) throws NoEncontradoException;
     List<ProveedorModel> getProveedores();
+    ProveedorModel getProveedorbyEmail(String email) throws NoEncontradoException;
+    ProveedorModel saveProveedor(ProveedorModel proveedorModel);
 
 }

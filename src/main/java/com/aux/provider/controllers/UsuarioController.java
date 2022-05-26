@@ -23,52 +23,29 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class UsuarioController {
+
+    // Invocamos los servicios(Acciones permitidas) que le corresponden al controlador
     @Autowired
     UsuarioService usuarioService;
 
+    // Peticion GET para obtener una lista de todos los usuarios y su  informacion
+    @GetMapping()
+    public ArrayList<UsuarioModel> obtenerUsuarios(){
+        return usuarioService.obtenerUsuarios();
+    }
 
+    // Peticion GET para obtener usuarios a partir de su id
+    @GetMapping( path = "/usuario/{id}")
+    public Optional<UsuarioModel> obtenerUsuarioPorId(@PathVariable("id") Long id){
+        return usuarioService.obtenerPorId(id);
+    }
 
+    // Peticion POST para guardar usuarios a la base de datos
     @PostMapping("/usuario/save")
     public ResponseEntity<UsuarioModel> saveUsuario(@RequestBody UsuarioModel usuarioModel){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/usuario/save").toUriString());
         return  ResponseEntity.created(uri).body(usuarioService.saveUsuario(usuarioModel));
     }
 
-    @GetMapping()
-    public ArrayList<UsuarioModel> obtenerUsuarios(){
-        return usuarioService.obtenerUsuarios();
-    }
-
-    @PostMapping()
-    public String RegistrarUsuario(@RequestBody UsuarioModel usuario){
-
-        boolean msg = this.usuarioService.guardarUsuario(usuario);
-        if(msg ){
-            return "Se guardo el usuario con correctamente";
-        }else {
-            return "Error: No se pudo guardar el usuario";
-        }
-    }
-
-    @GetMapping( path = "/{id}")
-    public Optional<UsuarioModel> obtenerUsuarioPorId(@PathVariable("id") Long id){
-        return usuarioService.obtenerPorId(id);
-    }
-
-    /*@GetMapping( path = "/query")
-    public ArrayList<UsuarioModel> obtenerUsuarioPorEmail(@RequestParam("email") String email){
-        return this.usuarioService.obtenerPorEmail(email);
-    }*/
-
-    @PutMapping("/{id}")
-    public UsuarioModel actualizarUsuario(@RequestBody UsuarioModel usuario,@PathVariable("id") Long id){
-        return usuarioService.updateUsuario(usuario, id);
-    }
-
-   /* @PostMapping("/usuario/setToProveedor")
-    public ResponseEntity<?> setUsuarioToPro(@RequestBody setUsuarioForm form) throws NoEncontradoException {
-        usuarioService.setUsuarioToProveedor(form.getEmail_usuario(), form.getId_proveedor());
-        return  ResponseEntity.ok().build();
-    }*/
 
 }

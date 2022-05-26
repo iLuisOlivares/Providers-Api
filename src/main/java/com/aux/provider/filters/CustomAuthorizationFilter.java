@@ -36,13 +36,18 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         this.tokenFilter = tokenFilter;
     }
 
+    // Verificacion de filtro de autorizacion para saber si el usuario tiene acceso a la respectiva pericion
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equals("/api/login" )|| request.getServletPath().equals("/api/proveedores") || request.getServletPath().equals("/api/proveedor/save")){
+        // Peticiones que no requieren de autorizacion
+        if(request.getServletPath().equals("/api/login" ) || request.getServletPath().equals("/api/proveedores")
+            || request.getServletPath().equals( "/api/proveedor/save") || request.getServletPath().equals("/email/send")
+            || request.getServletPath().equals("/api/servicios") || request.getServletPath().startsWith("/api/servicio/")){
                 filterChain.doFilter(request, response);
         }
         else {
             try {
+                // Logica de extraccion del token para ver si puede utilizar las peticiones
                 log.info("Extrayendo token");
                 String token = tokenFilter.extractAuthorizationToken(request);
                 DecodedJWT decodedJWT = tokenFilter.decodeJWT(token);
@@ -57,6 +62,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
 
             } catch (Exception exception) {
+                // Error con el token de acceso
                 log.error("Error ingresando: {}", exception.getMessage());
                 response.setHeader("error", exception.getMessage());
                 response.setStatus(FORBIDDEN.value());

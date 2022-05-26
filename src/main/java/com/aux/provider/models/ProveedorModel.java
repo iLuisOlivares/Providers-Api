@@ -30,16 +30,10 @@ public class ProveedorModel {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "proveedor", fetch = FetchType.LAZY)
     @JsonManagedReference
     private PerfilModel perfil;
-    /*@OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "referente_id", nullable = false, unique = true)
-    private ReferenteModel referente;*/
 
     @OneToMany(mappedBy = "proveedor")
     @JsonManagedReference
     private List<ServicioModel> servicios;
-
-
-
 
     public ProveedorModel(long id, String tipo_id) {
         this.id = id;
