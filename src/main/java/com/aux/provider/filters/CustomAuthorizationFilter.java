@@ -42,7 +42,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         // Peticiones que no requieren de autorizacion
         if(request.getServletPath().equals("/api/login" ) || request.getServletPath().equals("/api/proveedores")
             || request.getServletPath().equals( "/api/proveedor/save") || request.getServletPath().equals("/email/send")
-            || request.getServletPath().equals("/api/servicios") || request.getServletPath().startsWith("/api/servicios/")){
+                || request.getServletPath().startsWith("api/servicio/update")){
                 filterChain.doFilter(request, response);
         }
         else {

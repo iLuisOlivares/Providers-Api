@@ -21,7 +21,7 @@ public class ServicioController {
     public ArrayList<ServicioModel> obtenerServicios(){return servicioService.getServicios();}
 
     // Peticion GET para obtener una lista de servicios por el id del proveedor
-    @GetMapping("/servicios/{id}")
+    @GetMapping("/servicios/proveedor/{id}")
     public List<ServicioModel> getServicio(@PathVariable("id") Long id){
         return servicioService.getServiciosProv(id);
     }
@@ -33,7 +33,7 @@ public class ServicioController {
 
     }
     // Peticion PUT para actualizar un servicio por medio de ID
-    @PutMapping("/servicios/update/{id}")
+    @PutMapping("/servicio/update/{id}")
     public ServicioModel updateServicio(@RequestBody ServicioModel servicio, @PathVariable("id") Long id) throws NoEncontradoException {
         return servicioService.updateServicio(servicio,id);
     }

@@ -33,7 +33,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         this.authenticationManager = authenticationManager;
     }
 
-    // Filtros de autenticacion de usuario para darle acceso a las respectivas peticiones
+    //Filtros de autenticacion de usuario para darle acceso a las respectivas peticiones
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
        String email = request.getParameter("email");
@@ -44,11 +44,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
        return authenticationManager.authenticate(AuthenticationToken);
     }
 
-    // Filtro cuando la autenticacion es satisfactoria
+    //Filtro cuando la autenticacion es satisfactoria
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         User usuario = (User)authentication.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256("AUXPROVIDER".getBytes());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         String accesToken = JWT.create().withSubject(usuario.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 100 * 700 * 60 * 100))
                 .withIssuer(request.getRequestURL().toString())
@@ -58,7 +58,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withExpiresAt(new Date(System.currentTimeMillis() + 100 * 700 * 60 * 100))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
-       // Enviar un Json con los tokens, y id del usuario
+       //Enviar un Json con los tokens, y id del usuario
         Map<String,String> tokens = new HashMap<>();
         tokens.put("refresh_token",refreshToken);
         tokens.put("acces_token",accesToken);

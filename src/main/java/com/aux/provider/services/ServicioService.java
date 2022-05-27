@@ -32,7 +32,8 @@ public class ServicioService implements ServicioServiceInterface {
 
     //Logica para la Actualizar(Guardar, Modificar, Eliminar) un servicio
     @Override
-    public ServicioModel updateServicio(ServicioModel servicio, Long id) throws NoEncontradoException {
+    public ServicioModel
+    updateServicio(ServicioModel servicio, Long id) throws NoEncontradoException {
             log.info("Guardando servicio en la base de datos {}", servicio);
         //Verificacion si el servicio existe
         if(servicioRepository.existsById(servicio.getId())){
