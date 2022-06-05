@@ -12,7 +12,7 @@ public class ServicioClienteService implements ServicioClienteInterface {
     @Autowired
     private JavaMailSender mailSender;
 
-    //Logica para enviar email
+    //Logica para enviar mail
     @Override
     public void sendEmail(String from, String to, String subject, String content) {
 

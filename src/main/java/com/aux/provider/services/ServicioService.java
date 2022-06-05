@@ -37,7 +37,6 @@ public class ServicioService implements ServicioServiceInterface {
         //Verificacion si el servicio existe
         if(servicioRepository.existsById(servicio.getId())){
                 //Si tiene un estado activo
-                if(servicio.isActivo()){
                     log.info("Modificando servicio del proveedor con id: {}", id);
                     //si existe y tiene un estado activo igual a true lo buscamos
                     // y procedemos a modificar los respectivos atributos
@@ -47,15 +46,7 @@ public class ServicioService implements ServicioServiceInterface {
                     //Invoca al repositorio para actualizar el servicio
                     return servicioRepository.save(servicioOld);
 
-                }else{
-                    //Si existe y tiene un estado activo igual a false lo buscamos
-                    // y procedemos a desactivarlo
-                    log.info("Desactivando servicio del proveedor con id: {}", id);
-                    ServicioModel servicioOld = this.getServicio(servicio.getId());
-                    servicioOld.setActivo(servicio.isActivo());
-                    //Invoca al repositorio para actualizar el servicio
-                    return servicioRepository.save(servicioOld);
-                }
+
             }else {
                 //Si no existe se procede a buscar al proveedor
                 log.info("Buscando al proveedor con id: {}", id);

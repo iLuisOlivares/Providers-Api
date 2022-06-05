@@ -41,7 +41,7 @@ public class UsuarioService implements UsuarioInterfaceService, UserDetailsServi
         return new org.springframework.security.core.userdetails.User(usuarioModel.getEmail(), usuarioModel.getClave(), authorities);
     }
 
-    //Logica para la obtener una lista de los usuarios
+    //Logica Para la obtener una lista de los usuarios
     public ArrayList<UsuarioModel> obtenerUsuarios(){
         //Invoca al repositorio para realizar la consulta de todos los usuarios
         return(ArrayList<UsuarioModel>) usuarioRepository.findAll();

@@ -26,7 +26,7 @@ import java.util.List;
 @Service @Transactional @Slf4j @RequiredArgsConstructor
 public class ProveedorService implements ProveedorInterfaceService{
 
-    //Logica de servicios de los proveedores
+    //logica de servicios de los proveedores
     @Autowired
     private final ProveedorRepository proveedorRepository;
     private final PasswordEncoder passwordEncoder;
@@ -34,7 +34,7 @@ public class ProveedorService implements ProveedorInterfaceService{
     @Override
     public ProveedorModel getProveedorbyEmail(String email) throws NoEncontradoException {
         log.info("Buscando proveedor con email: {}", email);
-        //Invoca al repositorio para encontrar al proveedor por medio del usuario y su atributo email
+        //Invoca al repositorio para encontrrar al proveedor por medio del usuario y su atributo email
         return proveedorRepository.findByUsuario_Email(email).orElseThrow(
                 () -> new NoEncontradoException("Proveedor no existe")
         );
